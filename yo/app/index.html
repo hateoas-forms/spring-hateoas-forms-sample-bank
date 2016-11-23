@@ -1,0 +1,264 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.tmp) styles/vendor.css -->
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/font-awesome.css">
+    <link rel="stylesheet" href="styles/ionicons.min.css">
+
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angular-dialog-service/dist/dialogs.min.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/skins/blue-light-nav.css">
+    <!-- endbuild -->
+
+    <!-- Google Fonts -->
+  	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,700' rel='stylesheet' type='text/css'>
+  	<link href="http://fonts.googleapis.com/css?family=Oswald:300,400,700" rel="stylesheet" type="text/css">
+
+  </head>
+  <body ng-app="bankApp" ng-cloak>
+    <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+      <div login></div>
+
+    	<!-- WRAPPER -->
+    	<div class="wrapper ng-hide" ng-show="$root.principal">
+    		<div class="container-fluid">
+    			<!-- TOP BAR -->
+    			<nav class="top-bar navbar-fixed-top" role="navigation">
+    				<div class="row">
+    					<div class="col-md-3 col-sm-4 col-xs-7">
+    					
+    						<a class="btn btn-link btn-off-canvas pull-left"><i class="icon ion-navicon"></i></a>
+    						<div class="logo pull-left">
+    							<i class="fa fa-university fa-logo"></i> <span class="logo-text">Insecure Bank </span>
+    						</div>
+    					</div>
+    					<div class="col-md-9 col-sm-8 col-xs-5">
+    						<div class="row">
+    							<div class="col-md-4 col-sm-4">
+    							</div>
+    							<div class="col-md-8 col-sm-8">
+    								<div class="top-bar-right pull-right">
+
+    									<!-- logged user and the menu -->
+    									<div class="logged-user" user-menu>
+    										<div class="btn-group">
+    											<a class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+    												<i class="icon ion-android-social-user"></i>
+                              <span class="name">{{$root.principal.name + ' ' + $root.principal.surname}} <i class="icon ion-ios7-arrow-down"></i>
+                            </span>
+    											</a>
+    											<ul class="dropdown-menu" role="menu">
+    												<li>
+    													<a ng-click="logout()" href="#">
+    														<i class="icon ion-power"></i>
+    														<span class="text">Logout</span>
+    													</a>
+    												</li>
+    											</ul>
+    										</div>
+    									</div>
+
+
+    								</div>
+    							</div>
+    						</div>
+    					</div>
+    				</div>
+    			</nav>
+    			<!-- END TOP BAR -->
+    			<div class="row">
+    				<div class="col-lg-2 col-left">
+    					<!-- LEFT CONTENT -->
+    					<div class="left-content">
+    						<nav id="main-nav" class="main-nav" main-nav >
+
+    							<h3>MAIN</h3>
+    							<ul class="main-menu">
+
+    								<li ui-sref-active="active">
+                      <a ui-sref="dashboard"><i class="icon ion-ios7-speedometer"></i><span class="text">Dashboard</span></a></li>
+    								<li ui-sref-active="active">
+                      <a ui-sref="activity"><i class="icon ion-clipboard"></i><span class="text">Accounts activity</span></a></li>
+    								<li class="has-submenu">
+    									<a class="submenu-toggle"><i class="icon ion-android-note"></i>
+                        <span class="text">Transfers</span></a>
+                            			<ul class="list-unstyled sub-menu collapse-no">
+    										<li ui-sref-active="active"><a ui-sref="listTransfers"><span class="text">List transfers</span></a></li>
+    									</ul>
+    									<ul class="list-unstyled sub-menu collapse-no">
+    										<li ui-sref-active="active"><a ui-sref="transfer"><span class="text">Make a transfer</span></a></li>
+    									</ul>
+    								</li>
+    							</ul>
+	    						</nav>
+    					</div>
+    				</div>
+    				<div class="col-lg-10 col-right ">
+    					<div class="right-content">
+    						<!-- MAIN CONTENT -->
+    						<div class="main-content" >
+                    <div class="primary-content" ui-view>
+    								</div>
+
+    							</div>
+    						</div>
+    						<!-- END MAIN CONTENT -->
+    					</div>
+    				</div>
+
+
+
+    			</div>
+    		<div class="left-content-bg col-md-2"></div>
+    		</div>
+
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/traverson-angular/browser/dist/traverson-angular.js"></script>
+    <script src="bower_components/traverson-hal/browser/dist/traverson-hal.js"></script>
+    <script src="bower_components/ngstorage/ngStorage.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/angular-moment/angular-moment.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/angular-underscore/angular-underscore.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.js"></script>
+    <script src="bower_components/angular-dialog-service/dist/dialogs.min.js"></script>
+    <script src="bower_components/angular-dialog-service/dist/dialogs.js"></script>
+    <script src="bower_components/angular-dialog-service/dist/dialogs-default-translations.min.js"></script>
+    <script src="bower_components/angular-dialog-service/dist/dialogs-default-translations.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/activity.js"></script>
+    <script src="scripts/controllers/transfer.js"></script>
+    <script src="scripts/controllers/transferList.js"></script>
+    <script src="scripts/controllers/alert.js"></script>
+    <script src="scripts/controllers/alertList.js"></script>
+    <script src="scripts/auth/authService.js"></script>
+    <script src="scripts/auth/authInterceptor.js"></script>
+    <script src="scripts/auth/directive.js"></script>
+    <script src="scripts/auth/authCtrl.js"></script>
+    <script src="scripts/service/config.js"></script>
+    <script src="scripts/service/bankApi.js"></script>
+    <script src="scripts/service/cashAccount.js"></script>
+    <script src="scripts/service/transferList.js"></script>
+    <script src="scripts/service/alertList.js"></script>
+    <script src="scripts/service/hdivInterceptor.js"></script>
+    <script src="scripts/service/hal.js"></script>
+    <!-- endbuild -->
+
+        <style>
+        table {
+        	table-layout: fixed;
+        }
+
+        btn-align-center {
+        	text-align: right;
+        }
+        textarea {
+            resize:none;
+        }
+
+        table th,table td {
+        	overflow: hidden;
+        }
+
+        .fa-logo {
+        	color: #fff;
+        	font-size: 18px;
+        }
+
+        .logo-text {
+        	color: #fff;
+        	font-family: 'Oswald';
+        	font-size: 16px;
+        }
+
+        .main-nav{
+           margin-top: 32px;
+        }
+        
+	@media only screen and (max-width: 800px) {
+  /* Force table to not be like tables anymore */
+  #no-more-tables table,
+  #no-more-tables thead,
+  #no-more-tables tbody,
+  #no-more-tables th,
+  #no-more-tables td,
+  #no-more-tables tr {
+  	display: block;
+  }
+   
+  /* Hide table headers (but not display: none;, for accessibility) */
+  #no-more-tables thead tr {
+   position: absolute;
+   top: -9999px;
+   left: -9999px;
+  }
+   
+  #no-more-tables tr { border: 1px solid #ccc; }
+    
+  #no-more-tables td {
+   /* Behave like a "row" */
+   border: none;
+   border-bottom: 1px solid #eee;
+   position: relative;
+   padding-left: 50%;
+   white-space: normal;
+   text-align:left;
+  }
+   
+  #no-more-tables td:before {
+   /* Now like a table header */
+   position: absolute;
+   /* Top/left values mimic padding */
+   top: 6px;
+   left: 6px;
+   width: 45%;
+   padding-right: 10px;
+   white-space: nowrap;
+   text-align:left;
+   font-weight: bold;
+  }
+   
+  /*
+  Label the data
+  */
+  #no-more-tables td:before { content: attr(data-title); }
+}
+        
+</style>
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+
+<div class="heading clearfix">
+  <h2>{{myButtonLabel.toUpperCase()}} A TRANSFER</h2>
+  <ul class="breadcrumb pull-left">
+    <li><i class="icon ion-home"></i><a ui-sref="dashboard">Home</a></li>
+    <li ng-show="!savedTransfer">{{myButtonLabel}} a transfer</li>
+    <li ng-show="savedTransfer"><a ui-sref="transfer" ng-click="savedTransfer=null">{{myButtonLabel}} a transfer</a></li>
+    <li ng-show="savedTransfer">Transfer confirmation</li>
+  </ul>
+</div>
+
+<div class="ng-cloak" ng-show="!savedTransfer">
+
+<form name="transferForm" role="form" class="form-horizontal" method="POST" autocomplete="off" novalidate>
+
+  <div class="form-group">
+  	<label class="col-md-2 control-label">From Account</label>
+  	<div class="col-md-10">
+  		<select id="fromAccount" name="fromAccount" class="form-control" ng-disabled="isNonEditableForm = isNonEditableForm || false"
+        ng-options="item.number as item.description for item in cashaccounts" ng-model="newTransfer.fromAccount"></select>
+
+  	</div>
+  </div>
+
+
+
+  <div class="form-group">
+  	<label class="col-md-2 control-label">Send To</label>
+  	<div class="col-md-10">
+  	<script type="text/ng-template" id="customTemplate.html">
+  	<a>
+        <span ng-bind-html="match.model.number | uibTypeaheadHighlight:query"></span>
+		| <span>{{match.model.description}}</span>
+		| <span>{{match.model.username}}</span>
+  	</a>
+	</script>
+
+  		<input id="toAccount" ng-model="newTransfer.toAccount" name="toAccount" type="text" class="form-control" value=""
+	  		uib-typeahead="account.number as account.number for account in onEditingToAccount($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults"
+  			typeahead-template-url="customTemplate.html" ng-disabled="isNonEditableForm = isNonEditableForm || false"
+  		/>
+  		<i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+	    <div ng-show="noResults">
+	      <i class="glyphicon glyphicon-remove"></i> No Results Found
+	    </div>
+  	</div>
+  </div>
+
+
+
+  <div class="form-group">
+  	<label class="col-md-2 control-label">Description</label>
+  	<div class="col-md-10">
+  		<input id="description" ng-model="newTransfer.description" name="description" type="text" class="form-control" value="" ng-disabled="isNonEditableForm = isNonEditableForm || false"/>
+  	</div>
+  </div>
+
+
+
+  <div class="form-group ">
+  	<label class="col-md-2 control-label">Amount</label>
+  	<div class="col-md-10">
+  	<div class="input-group">
+  		<input id="amount" ng-model="newTransfer.amount" name="amount" type="text" class="form-control" value="0.0" ng-disabled="isNonEditableForm = isNonEditableForm || false"/>
+  		<span class="input-group-addon">&#8364;</span>
+  	</div>
+  	</div>
+  </div>
+
+	<div class="form-group">
+	  	<label class="col-md-2 control-label">Type</label>
+	  	<div class="col-md-10">
+	  		<select id="type" name="type" class="form-control" ng-disabled="isNonEditableForm = isNonEditableForm || false"
+	        ng-options="item.value as item.prompt for item in type" ng-model="newTransfer.type"></select>
+	  	</div>
+	</div>
+	
+	
+	<div class="form-group">
+	  	<label class="col-md-2 control-label">Status</label>
+	  	<div class="col-md-10">
+	  		<select id="status" name="status" class="form-control" ng-disabled="isNonEditableForm = isNonEditableForm || false"
+	        ng-options="item.value as item.prompt for item in status" ng-model="newTransfer.status"></select>
+	  	</div>
+	</div>
+	
+	<div class="form-group">
+	  	<label class="col-md-2 control-label">Options</label>
+	  	<div class="col-md-10">
+	  		<select id="options" name="options" class="form-control" multiple ng-disabled="isNonEditableForm = isNonEditableForm || false"
+	        ng-options="item.value as item.prompt for item in options" ng-model="newTransfer.options"></select>
+	  	</div>
+	</div>
+	
+   <div class="form-group ">
+  	<label class="col-md-2 control-label">Telephone</label>
+  	<div class="col-md-10">
+  		<input id="telephone" ng-model="newTransfer.telephone" name="telephone" type="text" class="form-control" value="0.0" ng-disabled="isNonEditableForm = isNonEditableForm || false"/>
+  	</div>
+  </div>
+  
+	
+   <div class="form-group ">
+  	<label class="col-md-2 control-label">Email</label>
+  	<div class="col-md-10">
+  		<input id="email" ng-model="newTransfer.email" name="email" type="text" class="form-control" value="0.0" ng-disabled="isNonEditableForm = isNonEditableForm || false"/>
+  	</div>
+  </div>
+
+  	<div class="form-group">
+  		<label class="col-md-2 control-label">Fee</label>
+  		<div class="col-md-10">
+  			<p id="fee" class="form-control-static">5%</p>
+  		</div>
+  	</div>
+  	<input id="fee" name="fee" type="hidden" value="5.0"/>
+
+
+  <div class="form-group">
+  	<div class="col-sm-12">
+  		 <div class="pull-right"><button type="submit" class="btn btn-primary" ng-click="onClickSend()">{{ myButtonLabel }}</button></div>
+  	</div>
+  </div>
+</form>
+</div>
+
+<div class="widget" ng-hide="!savedTransfer" ng-cloak>
+	<div class="widget-header clearfix">
+		<h3><i class="icon ion-compose"></i> <span>TRANSFER CONFIRMATION</span></h3>
+	</div>
+  <div class="widget-content">
+  	<div class="alert alert-success fade in">
+			<button data-dismiss="alert" class="close">×</button>
+			<i class="icon ion-checkmark-circled"></i>
+			<strong>Success!</strong> You have successfully made/updated/deleted the transfer.
+		</div>
+		<table class="table table-bordered table-striped" id="user">
+			<tbody>
+				<tr>
+					<td><label class="col-md-2 control-label">From</label></td>
+					<td>{{savedTransfer.username}}</td>
+				</tr>
+				<tr>
+					<td><label class="col-md-4 control-label">From Account</label></td>
+					<td>{{savedTransfer.fromAccount}}</td>
+				</tr>
+				<tr>
+					<td><label class="col-md-4 control-label">Send To</label></td>
+					<td>{{savedTransfer.toAccount}}</td>
+				</tr>
+				<tr>
+					<td><label class="col-md-4 control-label">Description</label></td>
+					<td>{{savedTransfer.description}}</td>
+				</tr>
+				<tr>
+					<td><label class="col-md-4 control-label">Amount</label></td>
+					<td>{{savedTransfer.amount}} €</td>
+				</tr>
+				<tr>
+					<td><label class="col-md-4 control-label">Type</label></td>
+					<td>{{savedTransfer.type}}</td>
+				</tr>
+				<tr>
+					<td><label class="col-md-4 control-label">Status</label></td>
+					<td>{{savedTransfer.status}}</td>
+				</tr>
+				<tr>
+					<td><label class="col-md-4 control-label">Options</label></td>
+					<td>{{savedTransfer.options}}</td>
+				</tr>
+				<tr>
+					<td><label class="col-md-4 control-label">Fee</label></td>
+					<td>{{savedTransfer.fee}} €</td>
+				</tr>
+				<tr>
+					<td><label class="col-md-4 control-label">Telephone</label></td>
+					<td>{{savedTransfer.telephone}}</td>
+				</tr>
+				<tr>
+					<td><label class="col-md-4 control-label">Email</label></td>
+					<td>{{savedTransfer.email}}</td>
+				</tr>
+				<tr>
+					<td><label class="col-md-4 control-label">Date</label></td>
+					<td>Tue Jan 26 17:31:44 CET 2016 </td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

@@ -1,0 +1,65 @@
+
+  <div class="heading clearfix">
+    <h2>TRANSFERS ACTIVITY</h2>
+    <ul class="breadcrumb pull-left">
+      <li><i class="icon ion-home"></i><a ui-sref="dashboard">Home</a></li>
+      <li>Transfers activity</li>
+    </ul>
+  </div>
+
+  <div class="widget">
+        <div class="widget-header clearfix">
+          <h3><i class="icon ion-clipboard"></i> <span>ACTIVITY SUMARY</span></h3>
+        </div>
+        <div class="widget-content" id="no-more-tables">
+        	<div class="form-group" >
+	        	
+			    <label class="col-md-4 control-label">Select date range:</label>
+			  	<input type="text" class="col-md-2"
+               	   datepicker-popup="mediumDate"
+	               is-open="fd.valuationDatePickerIsOpen"
+	               ng-click="fd.valuationDatePickerOpen()"
+	               ng-model="fromDate" />
+	            <input type="text" class="col-md-2" style="margin-left:15px"
+               	   datepicker-popup="mediumDate"
+	               is-open="td.valuationDatePickerIsOpen"
+	               ng-click="td.valuationDatePickerOpen()"
+	               ng-model="toDate" />
+
+		  	</div>
+		  	<div class="form-group"  style="margin-top:35px">
+			  	<label class="col-md-4 control-label">Select status:</label>
+<!-- 			  	<div class="col-md-4"> -->
+			  		<select id="status" name="status" class="col-md-4"
+			        ng-options="item.value as item.prompt for item in status" ng-model="transferStatus">
+			        	<option value="">All</option>
+			        </select>
+<!-- 			    </div> -->
+			</div>
+		  	<div class="form-group">
+			  	<div class="col-sm-12">
+			  		 <a ng-click="onClickFilter();" class="btn btn-primary btn-xs pull-right "><i class="fa fa-search"></i> Filter</a>
+			  	</div>
+			</div>
+		  	<div class="form-group" style="margin-top:90px">
+	          <table class="table table-bordered  colored-header">
+	            <thead>
+	              <tr><th>Date</th><th>Description</th><th>Deposits</th><th>To Account</th><th>Detail</th><th>Delete</th></tr>
+	            </thead>
+	            <tbody>
+	
+	              <tr ng-repeat="transaction in transfers">
+	                <td data-title="Date">{{transaction.date | amDateFormat:'MMMM D YYYY, hh:mm:ss'}}</td>
+	                <td data-title="Description">{{transaction.description}}</td>
+	                <td data-title="Deposits"><span ng-show="transaction.amount>0">+{{transaction.amount}} EUR</span><span>&nbsp;</span></td>
+	                <td data-title="To Account">{{transaction.toAccount}}<span>&nbsp;</span></td>
+	
+	                <td data-title="View"><a ng-click="gotoActivity(transaction, 'modify')" ng-show="transaction._links['halforms:modify']" class="btn btn-primary btn-xs pull-right "><i class="fa fa-search"></i> Edit/View</a><a ng-click="gotoActivity(transaction, 'modify')" ng-show="!transaction._links['halforms:modify']" class="btn btn-primary btn-xs pull-right "><i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; View</a></td>
+	                <td data-title="Delete"><span>&nbsp;</span><a ng-show="transaction._links['halforms:delete']" ng-click="gotoActivity(transaction, 'delete')" class="btn btn-primary btn-xs pull-right "><i class="fa fa-trash"></i> Delete</a></td>
+	              </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+      </div>
+    </div>

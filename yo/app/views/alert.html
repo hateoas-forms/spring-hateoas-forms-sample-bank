@@ -1,0 +1,156 @@
+
+<div class="heading clearfix">
+  <h2>SETUP AN ALERT</h2>
+  <ul class="breadcrumb pull-left">
+    <li><i class="icon ion-home"></i><a ui-sref="dashboard">Home</a></li>
+    <li ng-show="!savedAlert">Setup an alert</li>
+    <li ng-show="savedAlert"><a ui-sref="transfer" ng-click="savedTransfer=null">Setup an alert</a></li>
+    <li ng-show="savedAlert">Alert confirmation</li>
+  </ul>
+</div>
+
+<div class="ng-cloak" ng-show="!savedAlert">
+
+<form name="alertForm" role="form" class="form-horizontal" method="POST" autocomplete="off" novalidate>
+
+  <div class="form-group ">
+  	<label class="col-md-2 control-label">Name</label>
+  	<div class="col-md-10">
+  		<input id="amount" ng-model="newAlert.name" name="name" type="text" class="form-control" value="0.0" ng-disabled="isNonEditableForm = isNonEditableForm || false"/>
+  	</div>
+  </div>
+
+	<div class="form-group">
+	  	<label class="col-md-2 control-label">Type</label>
+	  	<div class="col-md-10">
+	  		<select id="type" name="type" class="form-control" ng-disabled="isNonEditableForm = isNonEditableForm || false"
+	        ng-options="item.value as item.prompt for item in type" ng-model="newAlert.type"></select>
+	  	</div>
+	</div>
+	
+   <div class="form-group ">
+  	<label class="col-md-2 control-label">Telephone</label>
+  	<div class="col-md-10">
+  		<input id="telephone" ng-model="newAlert.telephone" name="telephone" type="text" class="form-control" value="0.0" ng-disabled="isNonEditableForm = isNonEditableForm || false"/>
+  	</div>
+  </div>
+  
+	
+   <div class="form-group ">
+  	<label class="col-md-2 control-label">Email</label>
+  	<div class="col-md-10">
+  		<input id="email" ng-model="newAlert.email" name="email" type="text" class="form-control" value="0.0" ng-disabled="isNonEditableForm = isNonEditableForm || false"/>
+  	</div>
+  </div>
+
+  <div data-ng-repeat="i in validIds">
+  <div class="form-group">
+  <label class="col-md-1 control-label">Condition {{i}}</label>
+  </div>
+  <div class="form-group">
+  	<label class="col-md-2 control-label">Account</label>
+  	<div class="col-md-10">
+  		<select id="condition{{$index}}.account" name="condition{{$index}}.account" class="form-control" ng-disabled="isNonEditableForm = isNonEditableForm || false"
+        ng-options="item.number as item.description for item in cashaccounts" ng-model="newAlert.conditions[$index].account"></select>
+
+  	</div>
+  </div>
+  
+  <div class="form-group" ng-show="newAlert.conditions[$index]">
+	  	<label class="col-md-2 control-label">Type</label>
+	  	<div class="col-md-10">
+	  		<select id="condition{{$index}}.type" name="condition{{$index}}.type" class="form-control" ng-disabled="isNonEditableForm = isNonEditableForm || false"
+	        ng-options="item.value as item.prompt for item in options" ng-model="newAlert.conditions[$index].type"></select>
+	  	</div>
+	</div>
+	  <div class="form-group" ng-show="newAlert.conditions[$index]">
+	  	<label class="col-md-2 control-label">Subtype</label>
+	  	<div class="col-md-10">
+	  		<select id="condition{{$index}}.subtype" name="condition{{$index}}.subtype" class="form-control" ng-disabled="isNonEditableForm = isNonEditableForm || false"
+	        ng-options="item.value as item.prompt for item in options" ng-model="newAlert.conditions[$index].subtype"></select>
+	  	</div>
+	</div>
+	  <div class="form-group " ng-show="newAlert.conditions[$index]">
+  	<label class="col-md-2 control-label">Value</label>
+  	<div class="col-md-10">
+  		<input id="condition{{$index}}.value" ng-model="newAlert.conditions[$index].value" name="condition.{{$index}}.value" type="text" class="form-control" value="0.0" ng-disabled="isNonEditableForm = isNonEditableForm || false"/>
+  	</div>
+  </div>
+  </div>
+  
+
+  </div>	
+  
+
+  <div class="form-group">
+  	<div class="col-sm-12">
+  		 <div class="pull-right"><button type="submit" class="btn btn-primary" ng-click="onClickSend()">{{ myButtonLabel }}</button></div>
+  	</div>
+  </div>
+</form>
+</div>
+
+<div class="widget" ng-hide="!savedTransfer" ng-cloak>
+	<div class="widget-header clearfix">
+		<h3><i class="icon ion-compose"></i> <span>TRANSFER CONFIRMATION</span></h3>
+	</div>
+  <div class="widget-content">
+  	<div class="alert alert-success fade in">
+			<button data-dismiss="alert" class="close">×</button>
+			<i class="icon ion-checkmark-circled"></i>
+			<strong>Success!</strong> You have successfully made the transfer.
+		</div>
+		<table class="table table-bordered table-striped" id="user">
+			<tbody>
+				<tr>
+					<td><label class="col-md-2 control-label">From</label></td>
+					<td>{{savedTransfer.username}}</td>
+				</tr>
+				<tr>
+					<td><label class="col-md-4 control-label">From Account</label></td>
+					<td>{{savedTransfer.fromAccount}}</td>
+				</tr>
+				<tr>
+					<td><label class="col-md-4 control-label">Send To</label></td>
+					<td>{{savedTransfer.toAccount}}</td>
+				</tr>
+				<tr>
+					<td><label class="col-md-4 control-label">Description</label></td>
+					<td>{{savedTransfer.description}}</td>
+				</tr>
+				<tr>
+					<td><label class="col-md-4 control-label">Amount</label></td>
+					<td>{{savedTransfer.amount}} €</td>
+				</tr>
+				<tr>
+					<td><label class="col-md-4 control-label">Type</label></td>
+					<td>{{savedTransfer.type}}</td>
+				</tr>
+				<tr>
+					<td><label class="col-md-4 control-label">Status</label></td>
+					<td>{{savedTransfer.status}}</td>
+				</tr>
+				<tr>
+					<td><label class="col-md-4 control-label">Options</label></td>
+					<td>{{savedTransfer.options}}</td>
+				</tr>
+				<tr>
+					<td><label class="col-md-4 control-label">Fee</label></td>
+					<td>{{savedTransfer.fee}} €</td>
+				</tr>
+				<tr>
+					<td><label class="col-md-4 control-label">Telephone</label></td>
+					<td>{{savedTransfer.telephone}}</td>
+				</tr>
+				<tr>
+					<td><label class="col-md-4 control-label">Email</label></td>
+					<td>{{savedTransfer.email}}</td>
+				</tr>
+				<tr>
+					<td><label class="col-md-4 control-label">Date</label></td>
+					<td>Tue Jan 26 17:31:44 CET 2016 </td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

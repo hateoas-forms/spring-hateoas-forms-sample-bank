@@ -1,2 +1,8 @@
-# spring-hateoas-forms-sample-bank
-An example of an insecure bank using spring-hateoas and RESTful services
+SPRING HATEOAS FORMS SAMPLE APPLICATION
+===============================================
+Sample bank application showing the integration between Spring Mvc and spring-hateoas-forms.
+
+ 	
+ 	
+ 
+ 

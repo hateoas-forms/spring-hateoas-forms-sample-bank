@@ -1,0 +1,37 @@
+
+  <div class="heading clearfix">
+    <h2>ALERTS</h2>
+    <ul class="breadcrumb pull-left">
+      <li><i class="icon ion-home"></i><a ui-sref="dashboard">Home</a></li>
+      <li>Alerts</li>
+    </ul>
+  </div>
+
+  <div class="widget">
+        <div class="widget-header clearfix">
+          <h3><i class="icon ion-clipboard"></i> <span>SUMARY</span></h3>
+        </div>
+        <div class="widget-content" id="no-more-tables">
+        	
+		  	<div class="form-group" style="margin-top:55px">
+	          <table class="table table-bordered  colored-header">
+	            <thead>
+	              <tr><th>Name</th><th>Type</th><th>Email</th><th>Telephone</th><th>Detail</th><th>Delete</th></tr>
+	            </thead>
+	            <tbody>
+	
+	              <tr ng-repeat="transaction in alerts">
+	                <td data-title="Name">{{transaction.name}}</td>
+	                <td data-title="Type">{{transaction.type}}</td>
+	                <td data-title="Email">{{transaction.email}}</td>
+	                <td data-title="Telephone">{{transaction.telephone}}</td>
+	
+	                <td data-title="View"><a ng-click="gotoActivity(transaction, 'modify')" ng-show="transaction._links['halforms:modify']" class="btn btn-primary btn-xs pull-right "><i class="fa fa-search"></i> Edit/View</a><a ng-click="gotoActivity(transaction, 'modify')" ng-show="!transaction._links['halforms:modify']" class="btn btn-primary btn-xs pull-right "><i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; View</a></td>
+	                <td data-title="Delete"><span>&nbsp;</span><a ng-show="transaction._links['halforms:delete']" ng-click="gotoActivity(transaction, 'delete')" class="btn btn-primary btn-xs pull-right "><i class="fa fa-trash"></i> Delete</a></td>
+	              </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+      </div>
+    </div>

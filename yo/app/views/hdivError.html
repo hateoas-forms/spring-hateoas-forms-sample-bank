@@ -1,0 +1,72 @@
+<style type="text/css">
+
+.modal-content{
+	border-radius: 7px;
+}
+.modal-footer{
+	background-color: #f5f5f5;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-top: 1px solid #ddd;
+	padding: 10px 15px;
+}
+
+.modal-title{
+	color: white;
+}
+.modal-600{
+	width: 600px;
+}
+.modal-header{
+	background-color: #50565E; /*#90bd59;*/
+	border: 1px solid #4B5159;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	padding-bottom: 8px;
+	padding-top: 10px;
+}
+.btn-error{
+	/*border-radius: 5px;
+	border-color: #8E3436;
+	background-color: #A83A3D;*/
+}
+.btn-error:hover, .btn-error:active{
+	/*background-color: #8E3436;*/
+}
+.icon{
+	font-size:96px; 
+	color: #9e9e9e;
+}
+.message{
+	margin-top:60px;
+}
+@media (max-width: 600px) {
+    .modal-600 {
+        width: 380px;
+    }
+    .icon {
+    	font-size: 46px;
+    }
+    .message{
+		margin-top:25px;
+	}
+}
+</style>
+
+<div class="modal-header">
+		<button class="close" aria-hidden="true" data-dismiss="modal" type="button" ng-click="cancel()">×</button>
+		<img style="float:left; height: 24px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGIAAAAnCAYAAAD0MJ3RAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDowNTY5RjE2RDUwMjQxMUUzQjgzMkU2M0JGQjRCNzNFMCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDowNTY5RjE2RTUwMjQxMUUzQjgzMkU2M0JGQjRCNzNFMCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjA1NjlGMTZCNTAyNDExRTNCODMyRTYzQkZCNEI3M0UwIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjA1NjlGMTZDNTAyNDExRTNCODMyRTYzQkZCNEI3M0UwIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+qyOaTQAAB6NJREFUeNrsW3tMU1cY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">
+    <!-- <h4 class="modal-title">Error</h4> -->
+</div>
+<div class="modal-body" style="min-height:125px; padding: 0px 10px;">
+	<div class="row" style="margin-top:20px;">
+		<div class="col-md-4 col-xs-2 text-center icon">
+			<span class="icon ion-close-circled"></span>
+		</div>
+			<div class="col-md-8"><h3 class="message">Unauthorized access</h3>
+			</div>
+	</div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary btn-error" type="button" data-dismiss="modal" ng-click="cancel()">OK</button>
+</div>

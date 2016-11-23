@@ -1,0 +1,67 @@
+
+  <div class="heading clearfix">
+    <h2>DASHBOARD</h2>
+    <ul class="breadcrumb pull-left">
+      <li><i class="icon ion-home"></i><a ui-sref="dashboard">Home</a></li>
+      <li>Dashboard</li>
+    </ul>
+  </div>
+
+<div id="no-more-tables">
+  <!-- RESPONSIVE TABLE -->
+  <div class="widget">
+    <div class="widget-header clearfix">
+      <h3><i class="fa fa-list-alt"></i> <span>CASH ACCOUNTS</span></h3>
+    </div>
+    <div class="widget-content">
+      <div class="table-responsive">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>Cash Account</th>
+              <th>Description</th>
+              <th>Available Balance</th>
+              <th ></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="account in cashaccounts" ng-click="onClickOrder(account)">
+              <td data-title="Cash Account">{{account.number}}</td>
+              <td data-title="Description">{{account.description}}</td>
+              <td data-title="Available Balance"><span ng-show="account.availableBalance>0">+</span>{{account.availableBalance}} EUR</td>
+              <td><a ng-click="gotoActivity(account)" class="btn btn-primary btn-xs pull-right "><i class="fa fa-search"></i> View</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- END RESPONSIVE TABLE -->
+  <!-- RESPONSIVE TABLE -->
+  <div class="widget">
+    <div class="widget-header clearfix">
+      <h3><i class="fa fa-credit-card"></i> <span>CREDIT ACCOUNTS</span></h3>
+    </div>
+    <div class="widget-content">
+      <div class="table-responsive">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>Cash Account</th>
+              <th>Description</th>
+              <th>Available Balance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="account in creditaccounts" ng-click="onClickOrder(account)">
+              <td data-title="Cash Account"><i class="fa fa-cc-visa"></i> {{account.number}}</td>
+              <td data-title="Description">{{account.description}}</td>
+              <td data-title="Available Balance"><span ng-show="account.availableBalance>0">+</span>{{account.availableBalance}} EUR</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- END RESPONSIVE TABLE -->
+</div>
