@@ -1,6 +1,6 @@
 SPRING HATEOAS FORMS SAMPLE APPLICATION
 ===============================================
-Sample bank application showing the integration between Spring Mvc and [spring-hateoas-forms](https://github.com/hateoas-forms/spring-hateoas-forms).
+Sample bank application showing the integration between [spring-hateoas](https://github.com/spring-projects/spring-hateoas) and [spring-hateoas-forms](https://github.com/hateoas-forms/spring-hateoas-forms).
 
 ## Getting Started
 
@@ -159,10 +159,10 @@ And an example valid request payload:
 
 This request will response with a 201 code, so the transfer is created correctly.
 
-## Field with suggested values
+## Possible values for a field
 
 In a form it is common to have a field where the user can select a value in a list of accepted ones.
-This could be generated with a *<select>* field in the client side. In a Hateoas service it is possible to include the possible values in the definition of the field returned by the server in the form preparation request.
+This could be generated with a `<select>` field in the client side. In a Hateoas service it is possible to include the possible values in the definition of the field returned by the server in the form preparation request.
 
 For example, if a *type* property is added to the *Tranfer* class:
 
@@ -183,7 +183,7 @@ Where *TransferType* is a enum with two values:
 		NATIONAL, INTERNATIONAL
 	}
 
-The output of the form preparation request will include these field and it's suggested values:
+The output of the form preparation request will include these field and it's possible values:
 
 	{
 	  "_links": {
@@ -232,12 +232,12 @@ The output of the form preparation request will include these field and it's sug
 	  }
 	}
 
-This way the client can create a *<select>* element with the suggested values, *NATIONAL* and *INTERNATIONAL*.
+This way the client can create a `<select>` element with the suggested values, *NATIONAL* and *INTERNATIONAL*.
 
-## Field with suggested values retrieved from the server
+## Possible values for a field retrieved from the server
  
-We will introduce a change on the *toAccount* field. It will be converted to a *<select>* like element where suggested values are retrieved from the server in another request.
-This way the suggested values are showed to the user as he/she keys the account number.
+We will introduce a change on the *toAccount* field. It will be converted to a `<select>` like element where possible values are retrieved from the server in another request.
+This way possible values are showed to the user as he/she keys the account number.
 
 The field data for the transfer creation form preparation request will change and include the url for the filter request:
 
@@ -250,7 +250,7 @@ The field data for the transfer creation form preparation request will change an
 	  }
 	}
 
-The suggest url has a *filter* parameter that contains the text the user writes.
+The url has a *filter* parameter that contains the text the user writes.
 An example filter request:
 
 	http://localhost:8080/spring-hateoas-forms-sample-bank/api/cashaccounts?filter=10
@@ -301,8 +301,8 @@ To be able to do it, some changes must be done to the *Transfer* class.
 A new annotation is added to the *toAccount* field setter, *@Select*.
 It contains two properties:
 
-- type: Suggested types, REMOTE in this case, because the suggested values are retrieved from the server.
-- options: Contains the suggested values or the way to obtain them. In this case a class that implements *Options* is included, [CashAccountFilteredOptions](https://github.com/hateoas-forms/spring-hateoas-forms-sample-bank/blob/799ea73c2a34aa2c09dc4373f44364c529d4ab1f/src/main/java/com/github/hateoas/forms/samples/facade/CashAccountFilteredOptions.java).
+- type: Suggested types, REMOTE in this case, because the possible values are retrieved from the server.
+- options: Contains possible values or the way to obtain them. In this case a class that implements *Options* is included, [CashAccountFilteredOptions](https://github.com/hateoas-forms/spring-hateoas-forms-sample-bank/blob/799ea73c2a34aa2c09dc4373f44364c529d4ab1f/src/main/java/com/github/hateoas/forms/samples/facade/CashAccountFilteredOptions.java).
 
 *CashAccountFilteredOptions* class:
 
