@@ -158,3 +158,171 @@ And an example valid request payload:
 	}
 
 This request will response with a 201 code, so the transfer is created correctly.
+
+## Field with suggested values
+
+In a form it is common to have a field where the user can select a value in a list of accepted ones.
+This could be generated with a *<select>* field in the client side. In a Hateoas service it is possible to include the possible values in the definition of the field returned by the server in the form preparation request.
+
+For example, if a *type* property is added to the *Tranfer* class:
+
+	public class Transfer {
+	
+		private double amount;
+	
+		private String toAccount;
+	
+		private TransferType type; 
+		
+		...
+	}
+
+Where *TransferType* is a enum with two values:
+
+	public enum TransferType {
+		NATIONAL, INTERNATIONAL
+	}
+
+The output of the form preparation request will include these field and it's suggested values:
+
+	{
+	  "_links": {
+	    "self": {
+	      "href": "http://localhost:8080/spring-hateoas-forms-sample-bank/doc/make-transfer"
+	    },
+	    "curies": [
+	      {
+	        "href": "http://localhost:8080/spring-hateoas-forms-sample-bank/doc/{rel}",
+	        "name": "halforms",
+	        "templated": true
+	      }
+	    ]
+	  },
+	  "_templates": {
+	    "post": {
+	      "method": "POST",
+	      "properties": [
+	        {
+	          "name": "amount",
+	          "readOnly": false,
+	          "value": "0.0",
+	          "required": true
+	        },
+	        {
+	          "name": "toAccount",
+	          "readOnly": false,
+	          "required": true
+	        },
+	        {
+	          "name": "type",
+	          "readOnly": false,
+	          "suggest": [
+	            {
+	              "value": "NATIONAL",
+	              "prompt": "NATIONAL"
+	            },
+	            {
+	              "value": "INTERNATIONAL",
+	              "prompt": "INTERNATIONAL"
+	            }
+	          ]
+	        }
+	      ]
+	    }
+	  }
+	}
+
+This way the client can create a *<select>* element with the suggested values, *NATIONAL* and *INTERNATIONAL*.
+
+## Field with suggested values retrieved from the server
+ 
+We will introduce a change on the *toAccount* field. It will be converted to a *<select>* like element where suggested values are retrieved from the server in another request.
+This way the suggested values are showed to the user as he/she keys the account number.
+
+The field data for the transfer creation form preparation request will change and include the url for the filter request:
+
+	{
+	  "name": "toAccount",
+	  "readOnly": false,
+	  "suggest": {
+	    "href": "http://localhost:8080/spring-hateoas-forms-sample-bank/api/cashaccounts{?filter}",
+	    "prompt-field": "description"
+	  }
+	}
+
+The suggest url has a *filter* parameter that contains the text the user writes.
+An example filter request:
+
+	http://localhost:8080/spring-hateoas-forms-sample-bank/api/cashaccounts?filter=10
+	
+Response content, containing the suggested cash accounts, only one in this case:
+
+	{
+	  "_embedded": {
+	    "halforms:cashAccounts": [
+	      {
+	        "id": "10669803404133150948",
+	        "number": "10669803404133150948",
+	        "username": "Tom Bogen",
+	        "availableBalance": 3424.32,
+	        "description": "Checking Account",
+	        "_links": {
+	          "self": {
+	            "href": "http://localhost:8080/spring-hateoas-forms-sample-bank/api/cashaccounts/10669803404133150948"
+	          }
+	        }
+	      }
+	    ]
+	  },
+	  ...
+	}
+
+To be able to do it, some changes must be done to the *Transfer* class.
+
+	public class Transfer {
+	
+		private double amount;
+	
+		private String toAccount;
+	
+		private TransferType type; 
+		
+		public String getToAccount() {
+			return toAccount;
+		}
+	
+		public void setToAccount(@Select(type = SuggestType.REMOTE, options = CashAccountFilteredOptions.class) final String toAccount) {
+			this.toAccount = toAccount;
+		}
+		
+		...
+	}
+
+A new annotation is added to the *toAccount* field setter, *@Select*.
+It contains two properties:
+
+- type: Suggested types, REMOTE in this case, because the suggested values are retrieved from the server.
+- options: Contains the suggested values or the way to obtain them. In this case a class that implements *Options* is included, [CashAccountFilteredOptions](https://github.com/hateoas-forms/spring-hateoas-forms-sample-bank/blob/799ea73c2a34aa2c09dc4373f44364c529d4ab1f/src/main/java/com/github/hateoas/forms/samples/facade/CashAccountFilteredOptions.java).
+
+*CashAccountFilteredOptions* class:
+
+	public class CashAccountFilteredOptions implements Options<String> {
+		@Override
+		public List<Suggest<String>> get(final String[] value, final Object... args) {
+			Link link = AffordanceBuilder.linkTo(AffordanceBuilder.methodOn(CashAccountController.class).search(null, null)).withSelfRel();
+			return SuggestImpl.wrap(Arrays.asList(link.getHref()), null, "description");
+		}
+	}
+	
+As in the transfer creation form generation, *AffordanceBuilder* class is used to create a *Link* object to the Controller method that will receive the filter request, *CashAccountController.search()*.
+As previously showed and url to this Controller will be included in the field configuration.
+
+	{
+	  "name": "toAccount",
+	  "readOnly": false,
+	  "suggest": {
+	    "href": "http://localhost:8080/spring-hateoas-forms-sample-bank/api/cashaccounts{?filter}",
+	    "prompt-field": "description"
+	  }
+	}
+
