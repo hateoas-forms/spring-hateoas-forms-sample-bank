@@ -162,7 +162,7 @@ This request will response with a 201 code, so the transfer is created correctly
 ## Possible values for a field
 
 In a form it is common to have a field where the user can select a value in a list of accepted ones.
-This could be generated with a `<select>` field in the client side. In a Hateoas service it is possible to include the possible values in the definition of the field returned by the server in the form preparation request.
+For example, this could be generated with a `<select>` field in the client side. In a Hateoas service it is possible to include the possible values in the definition of the field returned by the server in the form preparation request.
 
 For example, if a *type* property is added to the *Tranfer* class:
 
@@ -233,6 +233,7 @@ The output of the form preparation request will include these field and it's pos
 	}
 
 This way the client can create a `<select>` element with the suggested values, *NATIONAL* and *INTERNATIONAL*.
+Note that in the example we are using HAL-FORMS hypermedia format where possible values are defined within "suggest" entity.
 
 ## Possible values for a field retrieved from the server
  
