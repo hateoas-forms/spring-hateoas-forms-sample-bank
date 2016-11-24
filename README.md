@@ -235,9 +235,13 @@ The output of the form preparation request will include these field and it's pos
 This way the client can create a `<select>` element with the suggested values, *NATIONAL* and *INTERNATIONAL*.
 Note that in the example we are using HAL-FORMS hypermedia format where possible values are defined within "suggest" entity.
 
-## Possible values for a field retrieved from the server
- 
-We will introduce a change on the *toAccount* field. It will be converted to a `<select>` like element where possible values are retrieved from the server in another request.
+## Possible values for a field retrieved dynamically
+
+In the previous example we have showed how to define the possible values for a field within the form defition. Another supported option to do it after the definition of the form is using an additional call to the server to get the possible values. For instance an AJAX call made from the browser to get the possible valued for a field.
+
+In order to implement this feature following an hypermedia approach HAL-FORMS hypermedia formats, supports the definition of a URL instead of the possible values. In other words, withim the form definition we do not define the possible values directly and we define a URL that will be the source of the possible values.
+
+To show this feature, we will introduce a change in the sample application updating *toAccount* field. It will be converted to a `<select>` like element in the browser where possible values are retrieved from the server in an AJAX call.
 This way possible values are showed to the user as he/she keys the account number.
 
 The field data for the transfer creation form preparation request will change and include the url for the filter request:
